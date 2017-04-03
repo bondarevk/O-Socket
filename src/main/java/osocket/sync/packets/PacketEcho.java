@@ -13,8 +13,13 @@ public class PacketEcho extends Packet {
     }
 
     @Override
+    public void executeOnServer(ChannelHandlerContext ctx) {
+        System.out.println("От клинта: " + text + " | ");
+    }
+
+    @Override
     public void executeOnClient(ChannelHandlerContext ctx) {
-        System.out.println(text);
+        System.out.println("От cервера: " + text + " | ");
     }
 
 }

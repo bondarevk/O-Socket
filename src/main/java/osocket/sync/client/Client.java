@@ -7,6 +7,7 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import osocket.sync.Packet;
 
 
 public class Client {
@@ -30,6 +31,10 @@ public class Client {
         bootstrap.option(ChannelOption.SO_KEEPALIVE, true);
         bootstrap.handler(new ClientInitializer());
         clientChannelFuture = bootstrap.connect(host, port).sync();
+    }
+
+    public ChannelFuture send(Packet packet) {
+        return clientChannelFuture.channel().writeAndFlush(packet);
     }
 
     public void disconnect() {

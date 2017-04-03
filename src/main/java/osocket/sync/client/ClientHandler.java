@@ -11,7 +11,6 @@ public class ClientHandler extends SimpleChannelInboundHandler<Packet> {
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
         System.out.println("Клиент подключлся к серверу.");
-        ctx.writeAndFlush(new PacketEcho("Приветик :3 От клиента"));
     }
 
     @Override

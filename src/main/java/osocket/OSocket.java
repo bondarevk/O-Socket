@@ -2,6 +2,7 @@ package osocket;
 
 
 import osocket.sync.client.Client;
+import osocket.sync.packets.PacketEcho;
 import osocket.sync.server.Server;
 
 public class OSocket {
@@ -13,8 +14,13 @@ public class OSocket {
 
         Client client = new Client("localhost", 26000);
         client.connect();
-        client.clientChannelFuture.channel().closeFuture().sync();
+        client.send(new PacketEcho("client"));
+        server.sendToAll(new PacketEcho("server"));
 
+        Thread.sleep(1000);
+        client.disconnect();
+
+        client.clientChannelFuture.channel().closeFuture().sync();
     }
 
 }

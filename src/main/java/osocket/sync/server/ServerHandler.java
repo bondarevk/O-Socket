@@ -1,5 +1,6 @@
 package osocket.sync.server;
 
+import io.netty.channel.group.ChannelGroup;
 import osocket.sync.Packet;
 import io.netty.channel.*;
 import osocket.sync.packets.PacketEcho;
@@ -7,10 +8,16 @@ import osocket.sync.packets.PacketEcho;
 
 public class ServerHandler extends SimpleChannelInboundHandler<Packet> {
 
+    private final ChannelGroup channels;
+
+    ServerHandler(ChannelGroup channels) {
+        this.channels = channels;
+    }
+
     @Override
     public void channelActive(final ChannelHandlerContext ctx) {
         System.out.println("Клиент подключился: ");
-        ctx.writeAndFlush(new PacketEcho("Приветик :3 От сервера"));
+        channels.add(ctx.channel());
     }
 
     @Override
